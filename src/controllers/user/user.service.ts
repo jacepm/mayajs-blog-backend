@@ -54,7 +54,7 @@ export class UserServices {
 
     try {
       const result = JSON.parse(JSON.stringify(await user.save()));
-      delete user.password;
+      delete result.password;
       return { status: 200, message: "User successfully added.", data: result, meta: {} };
     } catch (error) {
       await this.model.findOneAndDelete({ _id: user.id });
