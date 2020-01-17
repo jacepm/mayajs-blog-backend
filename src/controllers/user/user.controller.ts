@@ -1,4 +1,4 @@
-import { Get, Patch, Post, Delete, Put } from "@mayajs/common";
+import { Check, Get, Patch, Post, Delete, Put } from "@mayajs/common";
 import { Request, Response, NextFunction } from "express";
 import { Controller } from "@mayajs/core";
 import { UserServices } from "./user.service";
@@ -23,7 +23,16 @@ export class UserController {
     res.status(result.status).send(result);
   }
 
-  @Post({ path: "/", middlewares: [] })
+  @Post({
+    path: "/",
+    middlewares: [
+      Check("name").isString(),
+      Check("userName").isString(),
+      Check("password").isPassword(),
+      Check("confirmPassword").isPassword(),
+      Check("email").isEmail()
+    ]
+  })
   async post(req: Request, res: Response, next: NextFunction): Promise<void> {
     const result = await this.services.post(req.body);
     res.status(result.status).send(result);
