@@ -16,4 +16,10 @@ export class BlogController {
     const result = await this.services.get();
     res.status(result.status).send(result);
   }
+
+  @Get({ path: "/:id", middlewares: [] })
+  async getId(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const result = await this.services.getId(req.params.id);
+    res.status(result.status).send(result);
+  }
 }
