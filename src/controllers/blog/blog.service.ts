@@ -15,7 +15,7 @@ export class BlogServices {
         return { status: 400, message: "Blogs not found!", data: [], meta: {} }
       }
 
-      return { status: 200, message: "Blogs successfully fetch." };
+      return { status: 200, message: "Blogs successfully fetch.", data: result, meta: {} };
     } catch (error) {
       return { status: 400, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
@@ -29,7 +29,7 @@ export class BlogServices {
         return { status: 400, message: "Blog not found!", data: [], meta: {} }
       }
 
-      return { status: 200, message: "Blog successfully fetch." };
+      return { status: 200, message: "Blog successfully fetch.", data: result, meta: {} };
     } catch (error) {
       return { status: 400, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
