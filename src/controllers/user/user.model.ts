@@ -16,8 +16,17 @@ const schema = MongoSchema(
       type: String,
       unique: true,
     },
+    userName: {
+      required: [true, "Username is required."],
+      type: String,
+      unique: true,
+    },
     password: {
       required: [true, "Password is required."],
+      type: String
+    },
+    email: {
+      required: [true, "Email is required."],
       type: String,
       unique: true,
     },
