@@ -59,7 +59,7 @@ export class UserController {
   @Post({
     path: "/login",
     middlewares: [
-      Check("username").isString(),
+      Check("userName").isString(),
       Check("password")
         .isPassword()
         .minLength(8),
