@@ -33,6 +33,10 @@ const schema = MongoSchema(
     deleted: {
       default: false,
       type: Boolean
+    },
+    token: {
+      default: "",
+      type: String,
     }
   },
   options
