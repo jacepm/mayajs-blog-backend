@@ -7,7 +7,7 @@ import { routes } from "./app.routing.module";
   logs: "dev",
   port: 3333,
   database: Mongo({
-    connectionString: "your-connection-string-here",
+    connectionString: "mongodb+srv://root:root@blog-nyni0.mongodb.net/test?retryWrites=true&w=majority",
     options: {
       useCreateIndex: true,
       useNewUrlParser: true,
