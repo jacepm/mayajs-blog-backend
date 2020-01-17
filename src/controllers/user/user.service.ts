@@ -72,24 +72,24 @@ export class UserServices {
   }
 
   async login(body: any) {
-    const { username, password, token } = body;
+    const { userName, password, token } = body;
 
     let result;
 
     try {
-      result = await this.model.findOne({ username: username });
+      result = await this.model.findOne({ userName: userName });
 
       if (!result) {
-        return { status: 401, message: "Username not found!", data: [], meta: {} };
+        return { status: 401, message: "userName not found!", data: [], meta: {} };
       }
 
       if (!result.comparePassword(password)) {
-        return { status: 401, message: "Username or Password didn't matched!", data: [], meta: {} };
+        return { status: 401, message: "userName or Password didn't matched!", data: [], meta: {} };
       }
 
       result.setToken(token);
 
-      return { status: 200, message: `${result.username} is logged in.`, data: result, meta: {} };
+      return { status: 200, message: `${result.userName} is logged in.`, data: result, meta: {} };
     } catch (error) {
       return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
