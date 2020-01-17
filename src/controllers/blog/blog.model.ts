@@ -1,11 +1,36 @@
 import { MongoSchema, MongoModel } from "@mayajs/mongo";
 
-const schema = MongoSchema({
-  name: {
-    required: [true, "Name is required."],
-    type: String,
-    unique: true,
+const options = {
+  timestamps: {
+    createdAt: "DateCreated",
+    updatedAt: "DateUpdated",
+  }
+};
+
+const schema = MongoSchema(
+  {
+    title: {
+      required: [true, "Title is required."],
+      type: String,
+      unique: true
+    },
+    author: {
+      required: [true, "Author is required."],
+      type: String,
+      unique: true
+    },
+    content: {
+      required: [true, "Content is required."],
+      type: String,
+      unique: true
+    },
+    date: {
+      default: Date.now(),
+      required: [true, "Date is required."],
+      type: Date
+    }
   },
-});
+  options
+);
 
 export default MongoModel("Blog", schema);
