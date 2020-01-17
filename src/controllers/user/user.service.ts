@@ -39,7 +39,7 @@ export class UserServices {
     const { password, confirmPassword } = body;
 
     if (password !== confirmPassword) {
-      return { status: 422, message: "Password and Confirm Password doesn't matched!", data: [], meta: {} };
+      return { status: 422, message: "Password and Confirm Password didn't matched!", data: [], meta: {} };
     }
 
     let user;
@@ -66,6 +66,30 @@ export class UserServices {
     try {
       const result = await this.model.findOneAndUpdate({ _id: id }, { $set: body }, { new: true });
       return { status: 200, message: "User successfully updated.", data: result, meta: {} };
+    } catch (error) {
+      return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
+    }
+  }
+
+  async login(body: any) {
+    const { username, password, token } = body;
+
+    let result;
+
+    try {
+      result = await this.model.findOne({ username: username });
+
+      if (!result) {
+        return { status: 401, message: "Username not found!", data: [], meta: {} };
+      }
+
+      if (!result.comparePassword(password)) {
+        return { status: 401, message: "Username or Password didn't matched!", data: [], meta: {} };
+      }
+
+      result.setToken(token);
+
+      return { status: 200, message: `${result.username} is logged in.`, data: result, meta: {} };
     } catch (error) {
       return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
