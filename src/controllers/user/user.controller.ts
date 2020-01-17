@@ -55,4 +55,21 @@ export class UserController {
     const result = await this.services.patch(req.params.id, req.body);
     res.status(result.status).send(result);
   }
+  
+  @Post({
+    path: "/login",
+    middlewares: [
+      Check("username").isString(),
+      Check("password")
+        .isPassword()
+        .minLength(8),
+      Check("confirmPassword")
+        .isPassword()
+        .minLength(8)
+    ]
+  })
+  async login(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const result = await this.services.login(req.body);
+    res.status(result.status).send(result);
+  }
 }
