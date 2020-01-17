@@ -23,7 +23,7 @@ export class BlogServices {
 
   async getId(id: any) {
     try {
-      const result = await this.model.find({ _id: id });
+      const result = await this.model.findOne({ _id: id });
 
       if(!result) {
         return { status: 400, message: "Blog not found!", data: [], meta: {} }
