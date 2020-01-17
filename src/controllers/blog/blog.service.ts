@@ -20,4 +20,18 @@ export class BlogServices {
       return { status: 400, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
   }
+
+  async getId(id: any) {
+    try {
+      const result = await this.db.find({ _id: id });
+
+      if(!result) {
+        return { status: 400, message: "Blog not found!", data: [], meta: {} }
+      }
+
+      return { status: 200, message: "Blog successfully fetch." };
+    } catch (error) {
+      return { status: 400, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
+    }
+  }
 }
