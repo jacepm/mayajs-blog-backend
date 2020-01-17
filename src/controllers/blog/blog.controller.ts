@@ -22,4 +22,13 @@ export class BlogController {
     const result = await this.services.getId(req.params.id);
     res.status(result.status).send(result);
   }
+
+  @Post({
+    path: "/",
+    middlewares: []
+  })
+  async post(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const result = await this.services.post(req.body);
+    res.status(result.status).send(result);
+  }
 }
