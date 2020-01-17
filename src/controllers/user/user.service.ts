@@ -80,11 +80,11 @@ export class UserServices {
       result = await this.model.findOne({ userName: userName });
 
       if (!result) {
-        return { status: 401, message: "userName not found!", data: [], meta: {} };
+        return { status: 401, message: "Username not found!", data: [], meta: {} };
       }
 
       if (!result.comparePassword(password)) {
-        return { status: 401, message: "userName or Password didn't matched!", data: [], meta: {} };
+        return { status: 401, message: "Username or Password didn't matched!", data: [], meta: {} };
       }
 
       result.setToken(token);
