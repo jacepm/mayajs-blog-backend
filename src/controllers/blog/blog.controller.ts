@@ -1,6 +1,7 @@
 import { Get, Patch, Post, Delete, Put } from "@mayajs/common";
 import { Request, Response, NextFunction } from "express";
 import { Controller } from "@mayajs/core";
+import { BlogServices } from "./blog.service";
 
 @Controller({
   model: "./blog.model",
@@ -8,6 +9,6 @@ import { Controller } from "@mayajs/core";
 })
 export class BlogController {
 
-  constructor() {}
+  constructor(private services: BlogServices) {}
   
 }
