@@ -61,4 +61,13 @@ export class UserServices {
       return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
   }
+
+  async patch(id: any, body: any) {
+    try {
+      const result = await this.model.findOneAndUpdate({ _id: id }, { $set: body }, { new: true });
+      return { status: 200, message: "User successfully updated.", data: result, meta: {} };
+    } catch (error) {
+      return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
+    }
+  }
 }
