@@ -48,7 +48,16 @@ export class BlogServices {
       const result = JSON.parse(JSON.stringify(await blog.save()));
       return { status: 200, message: "Blog successfully added.", data: result, meta: {} };
     } catch (error) {
-      await this.model.findOneAndDelete({ _id: blog.id })
+      await this.model.findOneAndDelete({ _id: blog.id });
+      return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
+    }
+  }
+
+  async patch(id: any, body: any) {
+    try {
+      const result = await this.model.findOneAndUpdate({ _id: id }, { $set: (body) }, { new: true });
+      return { status: 200, message: "Blog successfully updated.", data: result, meta: {} };
+    } catch (error) {
       return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
   }
