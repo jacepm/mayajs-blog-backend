@@ -34,4 +34,22 @@ export class BlogServices {
       return { status: 400, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
   }
+
+  async post(body: any) {
+    let blog;
+
+    try {
+      blog = await this.model.create(body);
+    } catch (error) {
+      return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
+    }
+
+    try {
+      const result = JSON.parse(JSON.stringify(await blog.save()));
+      return { status: 200, message: "Blog successfully added.", data: result, meta: {} };
+    } catch (error) {
+      await this.model.findOneAndDelete({ _id: blog.id })
+      return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
+    }
+  }
 }
