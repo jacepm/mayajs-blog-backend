@@ -1,5 +1,6 @@
 import { MongoSchema, MongoModel } from "@mayajs/mongo";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { environment as env } from "../../environments"
 
 const options = {
