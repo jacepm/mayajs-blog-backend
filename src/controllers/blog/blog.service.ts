@@ -3,13 +3,13 @@ import { Models } from "@mayajs/mongo";
 
 @Injectable()
 export class BlogServices {
-  @Models("blog") db: any;
+  @Models("blog") model: any;
 
   constructor() {}
   
   async get() {
     try {
-      const result = await this.db.find();
+      const result = await this.model.find();
 
       if(result < 1) {
         return { status: 400, message: "Blogs not found!", data: [], meta: {} }
@@ -23,7 +23,7 @@ export class BlogServices {
 
   async getId(id: any) {
     try {
-      const result = await this.db.find({ _id: id });
+      const result = await this.model.find({ _id: id });
 
       if(!result) {
         return { status: 400, message: "Blog not found!", data: [], meta: {} }
