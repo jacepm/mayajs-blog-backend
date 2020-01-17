@@ -37,4 +37,18 @@ export class UserController {
     const result = await this.services.post(req.body);
     res.status(result.status).send(result);
   }
+
+  @Patch({
+    path: "/",
+    middlewares: [
+      Check("name").isString(),
+      Check("userName").isString(),
+      Check("email").isEmail(),
+      Check("deleted").isBoolean()
+    ]
+  })
+  async patch(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const result = await this.services.patch(req.params.id, req.body);
+    res.status(result.status).send(result);
+  }
 }
