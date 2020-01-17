@@ -34,4 +34,31 @@ export class UserServices {
       return { status: 400, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
   }
+
+  async post(body: any) {
+    const { password, confirmPassword } = body;
+
+    if (password !== confirmPassword) {
+      return { status: 422, message: "Password and Confirm Password doesn't matched!", data: [], meta: {} };
+    }
+
+    let user;
+
+    try {
+      user = await this.model.create(body);
+    } catch (error) {
+      return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
+    }
+    
+    user.setPassword(password);
+
+    try {
+      const result = JSON.parse(JSON.stringify(await user.save()));
+      delete user.password;
+      return { status: 200, message: "User successfully added.", data: result, meta: {} };
+    } catch (error) {
+      await this.model.findOneAndDelete({ _id: user.id });
+      return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
+    }
+  }
 }
