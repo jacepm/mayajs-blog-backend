@@ -11,4 +11,9 @@ export class BlogController {
 
   constructor(private services: BlogServices) {}
   
+  @Get({ path: "/", middlewares: [] })
+  async get(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const result = await this.services.get();
+    res.status(result.status).send(result);
+  }
 }
