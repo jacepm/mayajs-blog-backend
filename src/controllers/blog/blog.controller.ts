@@ -36,4 +36,19 @@ export class BlogController {
     const result = await this.services.post(req.body);
     res.status(result.status).send(result);
   }
+
+  @Patch({
+    path: "/:id",
+    middlewares: [
+      Check("title").isString(),
+      Check("author").isString(),
+      Check("content").isString(),
+      Check("date").isDate(),
+      Check("deleted").isBoolean()
+    ]
+  })
+  async patch(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const result = await this.services.patch(req.params.id, req.body);
+    res.status(result.status).send(result);
+  }
 }
