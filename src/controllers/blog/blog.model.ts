@@ -16,13 +16,11 @@ const schema = MongoSchema(
     },
     author: {
       required: [true, "Author is required."],
-      type: String,
-      unique: true
+      type: String
     },
     content: {
       required: [true, "Content is required."],
-      type: String,
-      unique: true
+      type: String
     },
     date: {
       default: Date.now(),
