@@ -28,8 +28,12 @@ export class UserController {
     middlewares: [
       Check("name").isString(),
       Check("userName").isString(),
-      Check("password").isPassword(),
-      Check("confirmPassword").isPassword(),
+      Check("password")
+        .isPassword()
+        .minLength(8),
+      Check("confirmPassword")
+        .isPassword()
+        .minLength(8),
       Check("email").isEmail()
     ]
   })
