@@ -1,4 +1,4 @@
-import { Get, Patch, Post, Delete, Put } from "@mayajs/common";
+import { Check, Get, Patch, Post, Delete, Put } from "@mayajs/common";
 import { Request, Response, NextFunction } from "express";
 import { Controller } from "@mayajs/core";
 import { BlogServices } from "./blog.service";
@@ -25,7 +25,12 @@ export class BlogController {
 
   @Post({
     path: "/",
-    middlewares: []
+    middlewares: [
+      Check("title").isString(),
+      Check("author").isString(),
+      Check("content").isString(),
+      Check("date").isDate()
+    ]
   })
   async post(req: Request, res: Response, next: NextFunction): Promise<void> {
     const result = await this.services.post(req.body);
