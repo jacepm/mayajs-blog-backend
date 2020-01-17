@@ -1,13 +1,14 @@
 import { App } from "@mayajs/core";
 import { Mongo } from "@mayajs/mongo";
 import { routes } from "./app.routing.module";
+import { environment as env } from "./environments";
 
 @App({
   cors: true,
   logs: "dev",
   port: 3333,
   database: Mongo({
-    connectionString: "mongodb+srv://root:root@blog-nyni0.mongodb.net/test?retryWrites=true&w=majority",
+    connectionString: env.DB_CONNECT,
     options: {
       useCreateIndex: true,
       useNewUrlParser: true,
