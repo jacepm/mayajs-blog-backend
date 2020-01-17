@@ -20,4 +20,18 @@ export class UserServices {
       return { status: 400, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
   }
+
+  async getId(id: any) {
+    try {
+      const result = await this.model.findOne({ _id: id });
+
+      if(!result) {
+        return { status: 400, message: "User not found!", data: [], meta: {} }
+      }
+
+      return { status: 200, message: "User successfully fetch.", data: result, meta: {} };
+    } catch (error) {
+      return { status: 400, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
+    }
+  }
 }
