@@ -62,9 +62,6 @@ export class UserController {
       Check("userName").isString(),
       Check("password")
         .isPassword()
-        .minLength(8),
-      Check("confirmPassword")
-        .isPassword()
         .minLength(8)
     ]
   })
