@@ -28,6 +28,10 @@ const schema = MongoSchema(
       default: Date.now(),
       required: [true, "Date is required."],
       type: Date
+    },
+    deleted: {
+      default: false,
+      type: Boolean
     }
   },
   options
