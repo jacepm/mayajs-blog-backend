@@ -51,8 +51,8 @@ schema.methods.comparePassword = function(password: string): boolean {
   return bcrypt.compareSync(password, this.password);
 };
 
-schema.methods.setToken = function(token: string): void {
-  jwt.sign(token, env.AUTH_TOKEN_KEY, { expiresIn: "60" });
+schema.methods.setToken = function(token: string): any {
+  jwt.sign({token: token}, env.AUTH_TOKEN_KEY);
 };
 
 export default MongoModel("User", schema);

@@ -12,7 +12,8 @@ import { environment as env } from "./environments";
     options: {
       useCreateIndex: true,
       useNewUrlParser: true,
-      useFindAndModify: false
+      useFindAndModify: false,
+      useUnifiedTopology: true
     }
   }),
   routes
