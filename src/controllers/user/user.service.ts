@@ -87,10 +87,8 @@ export class UserServices {
         return { status: 401, message: "Username or Password didn't matched!", data: [], meta: {} };
       }
 
-      const tok = result.setToken(token);
-      console.log(tok);
-
-
+      result.setToken(token);
+      
       return { status: 200, message: `${result.userName} is logged in.`, data: result, meta: {} };
     } catch (error) {
       return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
