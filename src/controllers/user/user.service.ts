@@ -15,7 +15,7 @@ export class UserServices {
         return { status: 400, message: "Users not found!", data: [], meta: {} }
       }
 
-      return { status: 200, message: "Users successfully fetch.", data: result, meta: {} };
+      return { status: 200, message: "Users successfully fetched.", data: result, meta: {} };
     } catch (error) {
       return { status: 400, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
@@ -29,7 +29,7 @@ export class UserServices {
         return { status: 400, message: "User not found!", data: [], meta: {} }
       }
 
-      return { status: 200, message: "User successfully fetch.", data: result, meta: {} };
+      return { status: 200, message: "User successfully fetched.", data: result, meta: {} };
     } catch (error) {
       return { status: 400, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
