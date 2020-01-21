@@ -89,7 +89,7 @@ export class UserServices {
         return { status: 401, message: "Username or Password didn't matched!", data: [], meta: {} };
       }
 
-      const token = jwt.sign({ _id: result.id }, env.AUTH_TOKEN_KEY, { expiresIn: "1h" });
+      const token = jwt.sign({ _id: result.id }, env.AUTH_TOKEN_KEY, { expiresIn: env.AUTH_TOKEN_EXPIRE });
       
       return { status: 200, message: `${result.userName} is logged in.`, data: result, meta: { token: token } };
     } catch (error) {
