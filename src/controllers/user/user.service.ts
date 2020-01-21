@@ -1,5 +1,7 @@
 import { Injectable } from "@mayajs/core";
 import { Models } from "@mayajs/mongo";
+import jwt from "jsonwebtoken";
+import { environment as env } from "../../environments"
 
 @Injectable()
 export class UserServices {
@@ -72,7 +74,7 @@ export class UserServices {
   }
 
   async login(body: any) {
-    const { userName, password, token } = body;
+    const { userName, password } = body;
 
     let result;
 
@@ -87,9 +89,9 @@ export class UserServices {
         return { status: 401, message: "Username or Password didn't matched!", data: [], meta: {} };
       }
 
-      result.setToken(token);
+      const token = jwt.sign({ _id: result.id }, env.AUTH_TOKEN_KEY, { expiresIn: "1h" });
       
-      return { status: 200, message: `${result.userName} is logged in.`, data: result, meta: {} };
+      return { status: 200, message: `${result.userName} is logged in.`, data: result, meta: { token: token } };
     } catch (error) {
       return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
