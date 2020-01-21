@@ -24,7 +24,8 @@ export function authToken(req: Request, res: Response, next: NextFunction): void
         } else {
             res.sendStatus(403);
         }
-    } catch {
+    } catch (error) {
+        console.log(error);
         res.status(401).send("Token is not valid!");
     }
 }
