@@ -1,7 +1,6 @@
 import { MongoSchema, MongoModel } from "@mayajs/mongo";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { environment as env } from "../../environments"
+import { environment as env } from "../../environments";
 
 const options = {
   timestamps: {
@@ -34,10 +33,6 @@ const schema = MongoSchema(
     deleted: {
       default: false,
       type: Boolean
-    },
-    token: {
-      default: "",
-      type: String
     }
   },
   options
@@ -50,9 +45,5 @@ schema.methods.setPassword = function(password: string): void {
 schema.methods.comparePassword = function(password: string): boolean {
   return bcrypt.compareSync(password, this.password);
 };
-
-schema.methods.setToken = function(id: any): void {
-  this.token = jwt.sign({ _id: id }, env.AUTH_TOKEN_KEY, { expiresIn: "1h" });
-}
 
 export default MongoModel("User", schema);
