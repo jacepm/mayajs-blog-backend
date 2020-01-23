@@ -6,7 +6,8 @@ export function authToken(req: Request, res: Response, next: NextFunction): void
 
     try {
         const unvalidatedUrls = [
-            "/user/login"
+            "/user/login",
+            "/blog"
         ];
 
         if (unvalidatedUrls.indexOf(req.url) > -1) {
