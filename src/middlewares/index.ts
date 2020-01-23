@@ -2,13 +2,15 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { environment as env } from "../environments";
 
-export function authToken(req: Request, res: Response, next: NextFunction): void {
-
+export function authToken(req: Request, res: Response, next: NextFunction, id: string): void {
     try {
         const unvalidatedUrls = [
             "/user/login",
-            "/blog"
+            "/blog",
+            "/blog/" + id
         ];
+
+        console.log(id);
 
         if (unvalidatedUrls.indexOf(req.url) > -1) {
             return next();
