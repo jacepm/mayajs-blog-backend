@@ -7,21 +7,17 @@ export const authToken = (
   res: Response,
   next: NextFunction
 ): void => {
-  const id: string = req.params.id;
+  const id: string = req.body.id;
   try {
     const unvalidatedUrls = [
-      { path: "/user/login", method: "POST" },
-      { path: "/blog", method: "GET" },
-      { path: "/blog/" + id, method: "GET" }
+      { path: "/user/login", method: "POST" }
     ];
 
     const unprotected = unvalidatedUrls.filter(
       url => url.path === req.url && url.method === req.method
     );
-
-    console.log(unprotected);
-
-    if (unprotected.length > 0) {
+    
+    if (unprotected.length > 0 || req.url.includes("blog") && req.method === "GET") {
       return next();
     }
 
