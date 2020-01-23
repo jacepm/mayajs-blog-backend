@@ -2,22 +2,17 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { environment as env } from "../environments";
 
-export const authToken = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void => {
+export const authToken = (req: Request, res: Response, next: NextFunction): void => {
   const id: string = req.body.id;
   try {
     const unvalidatedUrls = [
-      { path: "/user/login", method: "POST" }
+      { path: "/user/login", method: "POST" },
+      { path: "/blog", method: "GET" }
     ];
 
-    const unprotected = unvalidatedUrls.filter(
-      url => url.path === req.url && url.method === req.method
-    );
-    
-    if (unprotected.length > 0 || req.url.includes("blog") && req.method === "GET") {
+    const unprotected = unvalidatedUrls.filter(url => req.url.includes(url.path) && url.method === req.method);
+
+    if (unprotected.length > 0) {
       return next();
     }
 
