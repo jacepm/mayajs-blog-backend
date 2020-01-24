@@ -10,6 +10,6 @@ export const routes = [
       UserController
     ],
     middlewares: [authToken],
-    path: "",
+    path: "/api",
   },
 ];
