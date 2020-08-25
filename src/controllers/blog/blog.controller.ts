@@ -1,11 +1,11 @@
-import { Check, Get, Patch, Post, Delete, Put } from "@mayajs/common";
+import { Get, Patch, Post, Delete, Put, Check } from "@mayajs/common";
 import { Request, Response, NextFunction } from "express";
 import { Controller } from "@mayajs/core";
 import { BlogServices } from "./blog.service";
 
 @Controller({
   model: "./blog.model",
-  route: "/blog"
+  route: "/blog",
 })
 export class BlogController {
   constructor(private services: BlogServices) {}
@@ -24,7 +24,7 @@ export class BlogController {
 
   @Post({
     path: "/",
-    middlewares: [Check("title").isString(), Check("author").isString(), Check("content").isString(), Check("date").isDate()]
+    middlewares: [Check("title").isString(), Check("author").isString(), Check("content").isString(), Check("date").isDate()],
   })
   async post(req: Request, res: Response, next: NextFunction): Promise<void> {
     const result = await this.services.post(req.body);
@@ -33,7 +33,7 @@ export class BlogController {
 
   @Patch({
     path: "/:id",
-    middlewares: [Check("title").isString(), Check("author").isString(), Check("content").isString(), Check("date").isDate(), Check("deleted").isBoolean()]
+    middlewares: [Check("title").isString(), Check("author").isString(), Check("content").isString(), Check("date").isDate(), Check("deleted").isBoolean()],
   })
   async patch(req: Request, res: Response, next: NextFunction): Promise<void> {
     const result = await this.services.patch(req.params.id, req.body);

@@ -4,7 +4,7 @@ const options = {
   timestamps: {
     createdAt: "DateCreated",
     updatedAt: "DateUpdated",
-  }
+  },
 };
 
 const schema = MongoSchema(
@@ -12,25 +12,25 @@ const schema = MongoSchema(
     title: {
       required: [true, "Title is required."],
       type: String,
-      unique: true
+      unique: true,
     },
     author: {
       required: [true, "Author is required."],
-      type: String
+      type: String,
     },
     content: {
       required: [true, "Content is required."],
-      type: String
+      type: String,
     },
     date: {
       default: Date.now(),
       required: [true, "Date is required."],
-      type: Date
+      type: Date,
     },
     deleted: {
       default: false,
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   options
 );

@@ -1,4 +1,4 @@
-import { Check, Get, Patch, Post, Delete, Put } from "@mayajs/common";
+import { Get, Patch, Post, Delete, Put, Check } from "@mayajs/common";
 import { Request, Response, NextFunction } from "express";
 import { Controller } from "@mayajs/core";
 import { UserServices } from "./user.service";
@@ -8,9 +8,8 @@ import { UserServices } from "./user.service";
   route: "/user",
 })
 export class UserController {
-
   constructor(private services: UserServices) {}
-  
+
   @Get({ path: "/", middlewares: [] })
   async get(req: Request, res: Response, next: NextFunction): Promise<void> {
     const result = await this.services.get();
@@ -28,14 +27,10 @@ export class UserController {
     middlewares: [
       Check("name").isString(),
       Check("userName").isString(),
-      Check("password")
-        .isPassword()
-        .minLength(8),
-      Check("confirmPassword")
-        .isPassword()
-        .minLength(8),
-      Check("email").isEmail()
-    ]
+      Check("password").isPassword().minLength(8),
+      Check("confirmPassword").isPassword().minLength(8),
+      Check("email").isEmail(),
+    ],
   })
   async post(req: Request, res: Response, next: NextFunction): Promise<void> {
     const result = await this.services.post(req.body);
@@ -44,26 +39,16 @@ export class UserController {
 
   @Patch({
     path: "/",
-    middlewares: [
-      Check("name").isString(),
-      Check("userName").isString(),
-      Check("email").isEmail(),
-      Check("deleted").isBoolean()
-    ]
+    middlewares: [Check("name").isString(), Check("userName").isString(), Check("email").isEmail(), Check("deleted").isBoolean()],
   })
   async patch(req: Request, res: Response, next: NextFunction): Promise<void> {
     const result = await this.services.patch(req.params.id, req.body);
     res.status(result.status).send(result);
   }
-  
+
   @Post({
     path: "/login",
-    middlewares: [
-      Check("userName").isString(),
-      Check("password")
-        .isPassword()
-        .minLength(8)
-    ]
+    middlewares: [Check("userName").isString(), Check("password").isPassword().minLength(8)],
   })
   async login(req: Request, res: Response, next: NextFunction): Promise<void> {
     const result = await this.services.login(req.body);

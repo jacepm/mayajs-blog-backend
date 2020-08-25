@@ -6,7 +6,7 @@ const options = {
   timestamps: {
     createdAt: "DateCreated",
     updatedAt: "DateUpdated",
-  }
+  },
 };
 
 const schema = MongoSchema(
@@ -23,7 +23,7 @@ const schema = MongoSchema(
     },
     password: {
       required: [true, "Password is required."],
-      type: String
+      type: String,
     },
     email: {
       required: [true, "Email is required."],
@@ -32,17 +32,17 @@ const schema = MongoSchema(
     },
     deleted: {
       default: false,
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   options
 );
 
-schema.methods.setPassword = function(password: string): void {
+schema.methods.setPassword = function (password: string): void {
   this.password = bcrypt.hashSync(password, env.HASH_ID_SALT);
 };
 
-schema.methods.comparePassword = function(password: string): boolean {
+schema.methods.comparePassword = function (password: string): boolean {
   return bcrypt.compareSync(password, this.password);
 };
 

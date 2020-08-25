@@ -1,7 +1,7 @@
 import { Injectable } from "@mayajs/core";
 import { Models } from "@mayajs/mongo";
 import jwt from "jsonwebtoken";
-import { environment as env } from "../../environments"
+import { environment as env } from "../../environments";
 
 @Injectable()
 export class UserServices {
@@ -13,8 +13,8 @@ export class UserServices {
     try {
       const result = await this.model.find();
 
-      if(result < 1) {
-        return { status: 400, message: "Users not found!", data: [], meta: {} }
+      if (result < 1) {
+        return { status: 400, message: "Users not found!", data: [], meta: {} };
       }
 
       return { status: 200, message: "Users successfully fetched.", data: result, meta: {} };
@@ -27,8 +27,8 @@ export class UserServices {
     try {
       const result = await this.model.findOne({ _id: id });
 
-      if(!result) {
-        return { status: 400, message: "User not found!", data: [], meta: {} }
+      if (!result) {
+        return { status: 400, message: "User not found!", data: [], meta: {} };
       }
 
       return { status: 200, message: "User successfully fetched.", data: result, meta: {} };
@@ -51,7 +51,7 @@ export class UserServices {
     } catch (error) {
       return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
     }
-    
+
     user.setPassword(password);
 
     try {
@@ -90,7 +90,7 @@ export class UserServices {
       }
 
       const token = jwt.sign({ _id: result.id }, env.AUTH_TOKEN_KEY, { expiresIn: env.AUTH_TOKEN_EXPIRE });
-      
+
       return { status: 200, message: `${result.userName} is logged in.`, data: result, meta: { token: token } };
     } catch (error) {
       return { status: 422, message: error.errmsg ? error.errmsg : error.toString(), data: [], meta: {} };
