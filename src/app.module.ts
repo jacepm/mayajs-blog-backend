@@ -1,14 +1,11 @@
 import { App } from "@mayajs/core";
-import { Mongo } from "@mayajs/mongo";
+import Mongo from "./databases/mongo";
 import { routes } from "./app.routing.module";
-import { environment as env } from "./environments";
-import MongoDb from "./databases/mongo";
 
 @App({
   cors: true,
   logs: "dev",
-  port: 3333,
-  databases: [MongoDb],
+  databases: [Mongo],
   routes,
 })
 export class AppModule {}
