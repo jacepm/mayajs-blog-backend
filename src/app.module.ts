@@ -8,6 +8,7 @@ import { environment as env } from "./environments";
   logs: "dev",
   port: 3333,
   database: Mongo({
+    name: "main",
     connectionString: env.DB_CONNECT,
   }),
   routes,
