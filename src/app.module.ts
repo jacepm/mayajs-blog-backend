@@ -9,13 +9,7 @@ import { environment as env } from "./environments";
   port: 3333,
   database: Mongo({
     connectionString: env.DB_CONNECT,
-    options: {
-      useCreateIndex: true,
-      useNewUrlParser: true,
-      useFindAndModify: false,
-      useUnifiedTopology: true
-    }
   }),
-  routes
+  routes,
 })
 export class AppModule {}
