@@ -11,23 +11,50 @@ export class BlogsService {
     private model: Model<IBlog>,
   ) {}
 
-  create(createBlogDto: CreateBlogDto) {
-    return 'This action adds a new blog';
+  async create(createBlogDto: CreateBlogDto) {
+    try {
+      const result = await this.model.create(createBlogDto);
+      return { message: 'Blog was successfully added.', data: result };
+    } catch (error) {
+      return { message: error.errmsg ? error.errmsg : error.toString() };
+    }
   }
 
-  findAll() {
-    return `This action returns all blogs`;
+  async findAll() {
+    try {
+      const result = await this.model.find({ deleted: false });
+      return { message: 'Blogs successfully fetched.', data: result };
+    } catch (error) {
+      return { message: error.errmsg ? error.errmsg : error.toString() };
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} blog`;
+  async findById(id: string) {
+    try {
+      const result = await this.model.findById(id);
+      return { message: 'Blog successfully fetched.', data: result };
+    } catch (error) {
+      return { message: error.errmsg ? error.errmsg : error.toString() };
+    }
   }
 
-  update(id: number, updateBlogDto: UpdateBlogDto) {
-    return `This action updates a #${id} blog`;
+  async update(id: string, updateBlogDto: UpdateBlogDto) {
+    try {
+      const result = await this.model.findByIdAndUpdate(id, updateBlogDto, {
+        new: true,
+      });
+      return { message: 'Blog was successfully updated.', data: result };
+    } catch (error) {
+      return { message: error.errmsg ? error.errmsg : error.toString() };
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} blog`;
+  async remove(id: string) {
+    try {
+      await this.model.findByIdAndUpdate(id, { deleted: true });
+      return { message: 'User was successfully deleted.', data: [] };
+    } catch (error) {
+      return { message: error.errmsg ? error.errmsg : error.toString() };
+    }
   }
 }

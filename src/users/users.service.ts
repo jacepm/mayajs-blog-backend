@@ -11,23 +11,50 @@ export class UsersService {
     private model: Model<IUser>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    try {
+      const result = await this.model.create(createUserDto);
+      return { message: 'User was successfully added.', data: result };
+    } catch (error) {
+      return { message: error.errmsg ? error.errmsg : error.toString() };
+    }
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    try {
+      const result = await this.model.find({ deleted: false });
+      return { message: 'Users successfully fetched.', data: result };
+    } catch (error) {
+      return { message: error.errmsg ? error.errmsg : error.toString() };
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findById(id: string) {
+    try {
+      const result = await this.model.findById(id);
+      return { message: 'User successfully fetched.', data: result };
+    } catch (error) {
+      return { message: error.errmsg ? error.errmsg : error.toString() };
+    }
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    try {
+      const result = await this.model.findByIdAndUpdate(id, updateUserDto, {
+        new: true,
+      });
+      return { message: 'User was successfully updated.', data: result };
+    } catch (error) {
+      return { message: error.errmsg ? error.errmsg : error.toString() };
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    try {
+      await this.model.findByIdAndUpdate(id, { deleted: true });
+      return { message: 'User was successfully deleted.', data: [] };
+    } catch (error) {
+      return { message: error.errmsg ? error.errmsg : error.toString() };
+    }
   }
 }
