@@ -1,9 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { IBlog } from 'src/interfaces';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 
 @Injectable()
 export class BlogsService {
+  constructor(
+    @Inject('BLOG_MODEL')
+    private model: Model<IBlog>,
+  ) {}
+
   create(createBlogDto: CreateBlogDto) {
     return 'This action adds a new blog';
   }
