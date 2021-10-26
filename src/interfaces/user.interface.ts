@@ -6,4 +6,5 @@ export interface IUser extends Document {
   password: string;
   email: string;
   deleted: boolean;
+  setPassword(password: string): string;
 }

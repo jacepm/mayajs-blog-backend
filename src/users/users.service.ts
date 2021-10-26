@@ -1,4 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { Model } from 'mongoose';
 import { IUser } from 'src/interfaces';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -12,10 +16,29 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
+    const { password, confirmPassword } = createUserDto;
+
+    if (password !== confirmPassword) {
+      const message = "Password and Confirm Password didn't matched!";
+      throw new UnprocessableEntityException(message);
+    }
+
+    let user: IUser;
+
     try {
-      const result = await this.model.create(createUserDto);
+      user = await this.model.create(createUserDto);
+    } catch (error) {
+      return { message: error.errmsg ? error.errmsg : error.toString() };
+    }
+
+    user.setPassword(password);
+
+    try {
+      const result = JSON.parse(JSON.stringify(await user.save()));
+      delete result.password;
       return { message: 'User was successfully added.', data: result };
     } catch (error) {
+      await this.model.findOneAndDelete({ _id: user.id });
       return { message: error.errmsg ? error.errmsg : error.toString() };
     }
   }

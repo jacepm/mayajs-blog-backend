@@ -1,4 +1,5 @@
 import { Schema } from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
 const options = {
   timestamps: {
@@ -35,5 +36,13 @@ const schema = new Schema(
   },
   options,
 );
+
+schema.methods.setPassword = function (password: string): void {
+  this.password = bcrypt.hashSync(password, +process.env.HASH_ID_SALT);
+};
+
+schema.methods.comparePassword = function (password: string): boolean {
+  return bcrypt.compareSync(password, this.password);
+};
 
 export const UserSchema = schema;
