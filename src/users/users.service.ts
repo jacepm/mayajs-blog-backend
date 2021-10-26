@@ -6,6 +6,7 @@ import {
 import { Model } from 'mongoose';
 import { IUser } from 'src/interfaces';
 import { CreateUserDto } from './dto/create-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
@@ -40,6 +41,27 @@ export class UsersService {
     } catch (error) {
       await this.model.findOneAndDelete({ _id: user.id });
       return { message: error.errmsg ? error.errmsg : error.toString() };
+    }
+  }
+
+  async login(loginUserDto: LoginUserDto) {
+    const { userName, password } = loginUserDto;
+    let user: IUser;
+
+    try {
+      user = await this.model.findOne({ userName: userName });
+      if (!user || !user.comparePassword(password)) {
+        const message = 'Invalid username and password!';
+        throw new UnprocessableEntityException(message);
+      }
+      const result: IUser = JSON.parse(JSON.stringify(user));
+      delete result.password;
+      const message = `${result.userName} was successfully logged in.`;
+      return { message, data: result };
+    } catch (error) {
+      return error.response
+        ? { ...error.response }
+        : { message: error.errmsg ? error.errmsg : error.toString() };
     }
   }
 

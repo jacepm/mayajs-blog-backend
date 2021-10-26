@@ -13,7 +13,6 @@ const schema = new Schema(
     name: {
       required: [true, 'Name is required.'],
       type: String,
-      unique: true,
     },
     userName: {
       required: [true, 'Username is required.'],
